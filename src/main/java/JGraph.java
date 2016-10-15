@@ -129,4 +129,9 @@ public class JGraph<N,E> implements Graph<N,E> {
         }
     }
 
+    //@returns: an int representing the number of nodes in the graph
+    public int size()
+    {
+        return this.node_count;
+    }
 }
