@@ -15,7 +15,6 @@ class Edge<N,E> {
     //@param: N from  | the label of the node the edge is coming from
     //@param: N to    | the label of the node the edge is going to
     //@param: E label | the label of the edge
-    //@throws: none
     //@returns: this (a new edge)
     protected Edge(N to, N from, E label)
     {
