@@ -5,6 +5,7 @@
 
 package jgraph;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public interface Graph<N,E> {
 
@@ -28,9 +29,9 @@ public interface Graph<N,E> {
         //@returns: true if a node with the given label is in the graph, otherwise false
         public boolean contains(N node_label);
 
-        //@returns: An ArrayList of the node labels of all nodes in the graph
-        public ArrayList<N> getNodes();
+        //@returns: A HashSet of the node labels of all nodes in the graph
+        public HashSet<N> getNodes();
 
-        //@returns: An ArrayList of the edge labels of all edges in the graph
-        public ArrayList<E> getEdges();
+        //@returns: A HashSet of the edge labels of all edges in the graph
+        public HashSet<E> getEdges();
 }

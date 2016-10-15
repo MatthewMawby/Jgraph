@@ -7,6 +7,7 @@ package jgraph;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 
 //JGraph is a mutable Graph ADT
 //
@@ -147,4 +148,12 @@ public class JGraph<N,E> implements Graph<N,E> {
     {
         return node_list.containsKey(node_label);
     }
+
+    //@returns: A HashSet of the node labels of all nodes in the graph
+    public HashSet<N> getNodes()
+    {
+        HashSet<N> nodes = new HashSet<N>(node_list.keySet());
+        return nodes;
+    }
+
 }
