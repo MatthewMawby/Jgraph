@@ -7,6 +7,7 @@ package jgraph;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 
 //JGraph is a mutable Graph Abstract Data Type
 //
@@ -100,7 +101,7 @@ public class JGraph<N,E> implements Graph<N,E> {
 
     //@param: N to    | the label of the node the edge is going to
     //@param: N from  | the label of the node the edge is coming from
-    //@param: E label | the label of the edge
+    //@param: E label | the label of the edge//@returns: A HashSet of the edge labels of all edges in the graph
     //@returns: true if the edge was added, otherwise false
     public boolean addEdge(N from, N to, E label)
     {
@@ -147,4 +148,55 @@ public class JGraph<N,E> implements Graph<N,E> {
     {
         return node_list.containsKey(node_label);
     }
+
+    //@returns: A HashSet of the node labels of all nodes in the graph
+    public HashSet<N> getNodes()
+    {
+        HashSet<N> nodes = new HashSet<N>(node_list.keySet());
+        return nodes;
+    }
+
+    //@returns: A HashMap of the edge labels of all edges in the graph and the number of times that entry appears
+    public HashMap<E,Integer> getEdges()
+    {
+        HashMap<E,Integer> edges = new HashMap<E,Integer>();
+        for (int c=0; c<adjacency_list.size(); c++)
+        {
+            ArrayList<Edge<N,E> > current = adjacency_list.get(c);
+            for (int g=0; g<current.size(); g++)
+            {
+                //if the current edge is in the HashMap increment the value by 1
+                if (edges.containsKey(current.get(g).label))
+                {
+                    edges.put(current.get(g).label, edges.get(current.get(g).label)+1);
+                }
+                //else add the edge to the HashMap and give it the value of 1
+                else
+                {
+                    edges.put(current.get(g).label, 1);
+                }
+            }
+        }
+        return edges;
+    }
+
+    //@returns: A HashSet containing the labels of nodes connected to the given node. Returns an empty set if the
+    //given node has no neighbors or is not in the graph.
+    public HashSet<N> getNeighbors(N node_label)
+    {
+        HashSet<N> nodes = new HashSet<N>();
+
+        if (node_list.containsKey(node_label))
+        {
+            Node<N> n = node_list.get(node_label);
+            int id = n.getID();
+            ArrayList<Edge<N,E>> edges = adjacency_list.get(id);
+            for (int i=0; i<edges.size(); i++)
+            {
+                nodes.add(edges.get(i).to);
+            }
+        }
+        return nodes;
+    }
+
 }

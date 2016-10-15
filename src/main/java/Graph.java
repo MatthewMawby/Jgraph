@@ -4,6 +4,9 @@
 */
 
 package jgraph;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.HashMap;
 
 public interface Graph<N,E> {
 
@@ -27,4 +30,13 @@ public interface Graph<N,E> {
         //@returns: true if a node with the given label is in the graph, otherwise false
         public boolean contains(N node_label);
 
+        //@returns: A HashSet of the node labels of all nodes in the graph
+        public HashSet<N> getNodes();
+
+        //@returns: A HashMap of the edge labels of all edges in the graph and the number of times that entry appears
+        public HashMap<E,Integer> getEdges();
+
+        //@returns: A HashSet containing the labels of nodes connected to the given node. Returns an empty set if the
+        //given node has no neighbors or is not in the graph.
+        public HashSet<N> getNeighbors(N node_label);
 }
