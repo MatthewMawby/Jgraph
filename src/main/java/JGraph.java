@@ -140,4 +140,11 @@ public class JGraph<N,E> implements Graph<N,E> {
     {
         return this.edge_count;
     }
+
+    //@param: N node_label | label of the node to check for in the graph
+    //@returns: true if a node with the given label is in the graph, otherwise false
+    public boolean contains(N node_label)
+    {
+        return node_list.containsKey(node_label);
+    }
 }
