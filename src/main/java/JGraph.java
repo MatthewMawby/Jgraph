@@ -180,4 +180,23 @@ public class JGraph<N,E> implements Graph<N,E> {
         return edges;
     }
 
+    //@returns: A HashSet containing the labels of nodes connected to the given node. Returns an empty set if the
+    //given node has no neighbors or is not in the graph.
+    public HashSet<N> getNeighbors(N node_label)
+    {
+        HashSet<N> nodes = new HashSet<N>();
+
+        if (node_list.containsKey(node_label))
+        {
+            Node<N> n = node_list.get(node_label);
+            int id = n.getID();
+            ArrayList<Edge<N,E>> edges = adjacency_list.get(id);
+            for (int i=0; i<edges.size(); i++)
+            {
+                nodes.add(edges.get(i).to);
+            }
+        }
+        return nodes;
+    }
+
 }

@@ -35,4 +35,8 @@ public interface Graph<N,E> {
 
         //@returns: A HashMap of the edge labels of all edges in the graph and the number of times that entry appears
         public HashMap<E,Integer> getEdges();
+
+        //@returns: A HashSet containing the labels of nodes connected to the given node. Returns an empty set if the
+        //given node has no neighbors or is not in the graph.
+        public HashSet<N> getNeighbors(N node_label);
 }
