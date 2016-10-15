@@ -5,7 +5,7 @@
 
 package jgraph;
 
-public class Edge<N,E> {
+class Edge<N,E> {
 
     //member variables are for JGraph use only
     protected N from;
@@ -17,7 +17,7 @@ public class Edge<N,E> {
     //@param: E label | the label of the edge
     //@throws: none
     //@returns: this (a new edge)
-    public Edge(N to, N from, E label)
+    protected Edge(N to, N from, E label)
     {
         this.to = to;
         this.from = from;
