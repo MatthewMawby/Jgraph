@@ -6,6 +6,7 @@
 package jgraph;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.HashMap;
 
 public interface Graph<N,E> {
 
@@ -32,6 +33,6 @@ public interface Graph<N,E> {
         //@returns: A HashSet of the node labels of all nodes in the graph
         public HashSet<N> getNodes();
 
-        //@returns: A HashSet of the edge labels of all edges in the graph
-        public HashSet<E> getEdges();
+        //@returns: A HashMap of the edge labels of all edges in the graph and the number of times that entry appears
+        public HashMap<E,Integer> getEdges();
 }

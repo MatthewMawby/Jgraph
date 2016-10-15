@@ -101,7 +101,7 @@ public class JGraph<N,E> implements Graph<N,E> {
 
     //@param: N to    | the label of the node the edge is going to
     //@param: N from  | the label of the node the edge is coming from
-    //@param: E label | the label of the edge
+    //@param: E label | the label of the edge//@returns: A HashSet of the edge labels of all edges in the graph
     //@returns: true if the edge was added, otherwise false
     public boolean addEdge(N from, N to, E label)
     {
@@ -154,6 +154,30 @@ public class JGraph<N,E> implements Graph<N,E> {
     {
         HashSet<N> nodes = new HashSet<N>(node_list.keySet());
         return nodes;
+    }
+
+    //@returns: A HashMap of the edge labels of all edges in the graph and the number of times that entry appears
+    public HashMap<E,Integer> getEdges()
+    {
+        HashMap<E,Integer> edges = new HashMap<E,Integer>();
+        for (int c=0; c<adjacency_list.size(); c++)
+        {
+            ArrayList<Edge<N,E> > current = adjacency_list.get(c);
+            for (int g=0; g<current.size(); g++)
+            {
+                //if the current edge is in the HashMap increment the value by 1
+                if (edges.containsKey(current.get(g).label))
+                {
+                    edges.put(current.get(g).label, edges.get(current.get(g).label)+1);
+                }
+                //else add the edge to the HashMap and give it the value of 1
+                else
+                {
+                    edges.put(current.get(g).label, 1);
+                }
+            }
+        }
+        return edges;
     }
 
 }
