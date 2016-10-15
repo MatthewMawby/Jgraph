@@ -24,7 +24,7 @@ public class JGraph<N,E> implements Graph<N,E> {
     private ArrayList< ArrayList<Edge<N,E>> > adjacency_list;
     //private ArrayList<ArrayList<Integer>> adj_matrix; FUTURE IMPLEMENTATION
     private int node_count;
-    private int edge_count;     //edge_count is only used for verification in the checkrep method
+    private int edge_count;
 
     //@throws: RuntimeException if the representation invariant is broken
     //@returns: none
@@ -133,5 +133,11 @@ public class JGraph<N,E> implements Graph<N,E> {
     public int size()
     {
         return this.node_count;
+    }
+
+    //@returns: an int representing the number of edges in the graph
+    public int edgeCount()
+    {
+        return this.edge_count;
     }
 }
