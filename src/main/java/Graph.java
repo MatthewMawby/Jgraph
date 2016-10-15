@@ -8,14 +8,14 @@ package jgraph;
 public interface Graph<N,E> {
 
         //@param: N name | the node label
-        //@returns:  true if the node was added, false if otherwise
+        //@returns:  true if the node was added, otherwise false
         public boolean addNode(N name);
 
         //@param: N to    | the label of the node the edge is going to
         //@param: N from  | the label of the node the edge is coming from
         //@param: E label | the label of the edge
         //@returns: true if the edge was added, otherwise false
-        public boolean add_edge(N to, N from, E label);
+        public boolean addEdge(N to, N from, E label);
 
         //other functions such as search/contains
 }

@@ -98,4 +98,35 @@ public class JGraph<N,E> implements Graph<N,E> {
          }
     }
 
+    //@param: N to    | the label of the node the edge is going to
+    //@param: N from  | the label of the node the edge is coming from
+    //@param: E label | the label of the edge
+    //@returns: true if the edge was added, otherwise false
+    public boolean addEdge(N from, N to, E label)
+    {
+        checkRep();
+        Node<N> n1= new Node<N>(from);
+
+        //if either one of the nodes the edge is between are not in the graph
+        //then the edge can't be added
+        if(!node_list.containsKey(from) || !node_list.containsKey(to))
+        {
+            checkRep();
+            return false;
+        }
+
+        else
+        {
+            Edge<N,E> e = new Edge<N,E>(to, from, label);
+            n1=node_list.get(from);
+
+            //add the edge to the adjacency list
+            int nodeID=n1.getID();
+            this.adjacency_list.get(nodeID).add(e);
+            this.edge_count+=1;
+            checkRep();
+            return true;
+        }
+    }
+
 }
