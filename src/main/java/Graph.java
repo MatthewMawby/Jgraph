@@ -17,5 +17,14 @@ public interface Graph<N,E> {
         //@returns: true if the edge was added, otherwise false
         public boolean addEdge(N to, N from, E label);
 
-        //other functions such as search/contains
+        //@returns: an int representing the number of nodes in the graph
+        public int size();
+
+        //@returns: an int representing the number of edges in the graph
+        public int edgeCount();
+
+        //@param: N node_label | label of the node to check for in the graph
+        //@returns: true if a node with the given label is in the graph, otherwise false
+        public boolean contains(N node_label);
+
 }
