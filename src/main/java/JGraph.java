@@ -63,4 +63,14 @@ public class JGraph<N,E> implements Graph<N,E> {
         }
     }
 
+    //@returns: this (a new JGraph)
+    public JGraph()
+   {
+       this.node_list = new HashMap<N,Node<N>>();
+       this.adjacency_list= new ArrayList< ArrayList<Edge<N,E>> >();
+       this.node_count=0;
+       this.edge_count=0;
+       checkRep();
+   }
+
 }
