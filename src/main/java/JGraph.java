@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-//JGraph is a mutable Graph ADT
+//JGraph is a mutable Graph Abstract Data Type
 //
 //@Abstraction:
 //This class represents a graph such that V = node_count, E = edge_count and that for all elements of
