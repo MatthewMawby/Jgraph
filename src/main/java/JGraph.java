@@ -29,6 +29,7 @@ public class JGraph<N,E> implements Graph<N,E> {
     //@throws: RuntimeException if the representation invariant is broken
     //@returns: none
     //A private helper function to ensure the representation invariant is held
+    //This function will be called upon entering and exiting methods that modify JGraph
     private void checkRep() throws RuntimeException
     {
         int edges=0;
@@ -65,12 +66,36 @@ public class JGraph<N,E> implements Graph<N,E> {
 
     //@returns: this (a new JGraph)
     public JGraph()
-   {
-       this.node_list = new HashMap<N,Node<N>>();
-       this.adjacency_list= new ArrayList< ArrayList<Edge<N,E>> >();
-       this.node_count=0;
-       this.edge_count=0;
-       checkRep();
-   }
+    {
+        this.node_list = new HashMap<N,Node<N>>();
+        this.adjacency_list= new ArrayList< ArrayList<Edge<N,E>> >();
+        this.node_count=0;
+        this.edge_count=0;
+        checkRep();
+    }
+
+    //@param: N name | the node label
+    //@returns: true if the node was added, otherwise false
+    public boolean addNode(N name)
+    {
+         checkRep();
+         Node<N> n = new Node<N>(name);
+         if (node_list.containsKey(name))
+         {
+             checkRep();
+             return false;
+         }
+         //add the node to node_list and add a new node to the adjacency_list
+         else
+         {
+             n.setID(this.node_count);
+             this.node_count+=1;
+             ArrayList<Edge<N,E>> edges = new ArrayList<Edge<N,E>>();
+             this.adjacency_list.add(edges);
+             node_list.put(name, n);
+             checkRep();
+             return true;
+         }
+    }
 
 }
