@@ -39,4 +39,10 @@ public interface Graph<N,E> {
         //@returns: A HashSet containing the labels of nodes connected to the given node. Returns an empty set if the
         //given node has no neighbors or is not in the graph.
         public HashSet<N> getNeighbors(N node_label);
+
+        //@param:     source | the node label of the starting node
+        //@param: destination| the node label of the destination node
+        //@returns: an ArrayList of node labels in order from the source to the destination,
+        //empty ArrayList if the source node or destination node are not in the graph.
+        public ArrayList<N> shortestPath(N source, N destination);
 }
