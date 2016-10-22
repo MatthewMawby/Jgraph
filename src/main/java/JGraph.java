@@ -211,7 +211,7 @@ public class JGraph<N,E> implements Graph<N,E> {
             }
         }
 
-        return (edge_label instanceof Number);
+        return !(edge_label instanceof Number);
     }
 
     //@param:     source | the node label of the starting node
@@ -238,6 +238,10 @@ public class JGraph<N,E> implements Graph<N,E> {
         {
             return path;
         }
+
+
+
+
 
         return path;
     }
