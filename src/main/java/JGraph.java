@@ -1,4 +1,4 @@
-/**
+/*
 * @author Matthew Mawby
 * @version 1.0
 */
@@ -199,4 +199,46 @@ public class JGraph<N,E> implements Graph<N,E> {
         return nodes;
     }
 
+    //@returns: True if E is a Numeric type, false otherwise
+    private boolean edgeLabelsNotNumbers()
+    {
+        E edge_label = null;
+        for (int g=0; g<adjacency_list.size(); g++)
+        {
+            if (adjacency_list.get(g).size() > 0)
+            {
+                edge_label = adjacency_list.get(g).get(0).label;
+            }
+        }
+
+        return (edge_label instanceof Number);
+    }
+
+    //@param:     source | the node label of the starting node
+    //@param: destination| the node label of the destination node
+    //@returns: an ArrayList of node labels in order from the source to the destination,
+    //empty ArrayList if the source node or destination node are not in the graph.
+    public ArrayList<N> shortestPath(N source, N destination)
+    {
+
+        ArrayList<N> path = new ArrayList<N>();
+        ArrayList<E> dist = new ArrayList<E>(node_count);
+
+        if (edge_count == 0)
+        {
+            return path;
+        }
+
+        else if (edgeLabelsNotNumbers())
+        {
+            return path;
+        }
+
+        else if (!node_list.containsKey(source) || !node_list.containsKey(destination))
+        {
+            return path;
+        }
+
+        return path;
+    }
 }
