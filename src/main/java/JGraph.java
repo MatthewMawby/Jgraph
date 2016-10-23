@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.PriorityQueue;
 
 //JGraph is a mutable Graph ADT
 //
@@ -218,26 +219,43 @@ public class JGraph<N,E> implements Graph<N,E> {
     //@param: destination| the node label of the destination node
     //@returns: an ArrayList of node labels in order from the source to the destination,
     //empty ArrayList if the source node or destination node are not in the graph.
+    //Note: Only valid on graphs that have numeric edge_labels
     public ArrayList<N> shortestPath(N source, N destination)
     {
-
         ArrayList<N> path = new ArrayList<N>();
-        ArrayList<E> dist = new ArrayList<E>(node_count);
+        ArrayList<Double> dist = new ArrayList<Double>(node_count);
+        PriorityQueue<Double> pQ = new PriorityQueue<Double>();
 
+        //if there are no edges
         if (edge_count == 0)
         {
             return path;
         }
 
+        //if edgelabels aren't numeric
         else if (edgeLabelsNotNumbers())
         {
             return path;
         }
 
+        //if either source or destination aren't in the graph
         else if (!node_list.containsKey(source) || !node_list.containsKey(destination))
         {
             return path;
         }
+
+        //find the id of the source node && set distances
+        int sourceID = node_list.get(source).id;
+        for (int g=0; g<dist.size(); g++)
+        {
+            dist.set(g, Double.MAX_VALUE);
+            if (g==sourceID)
+            {
+                dist.set(g, new Double(0));
+            }
+        }
+
+        
 
 
 

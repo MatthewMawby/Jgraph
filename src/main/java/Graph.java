@@ -44,5 +44,6 @@ public interface Graph<N,E> {
         //@param: destination| the node label of the destination node
         //@returns: an ArrayList of node labels in order from the source to the destination,
         //empty ArrayList if the source node or destination node are not in the graph.
+        //Note: Only valid on graphs that have numeric edge_labels
         public ArrayList<N> shortestPath(N source, N destination);
 }
