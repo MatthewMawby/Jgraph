@@ -1,4 +1,4 @@
-/**
+/*
 * @author Matthew Mawby
 * @version 1.0
 */
@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.PriorityQueue;
 
 //JGraph is a mutable Graph Abstract Data Type
 //
@@ -199,4 +200,87 @@ public class JGraph<N,E> implements Graph<N,E> {
         return nodes;
     }
 
+    //@returns: True if E is a Numeric type, false otherwise
+    private boolean edgeLabelsNotNumbers()
+    {
+        E edge_label = null;
+        for (int g=0; g<adjacency_list.size(); g++)
+        {
+            if (adjacency_list.get(g).size() > 0)
+            {
+                edge_label = adjacency_list.get(g).get(0).label;
+            }
+        }
+
+        return !(edge_label instanceof Number);
+    }
+
+    //@param:     source | the node label of the starting node
+    //@param: destination| the node label of the destination node
+    //@returns: an ArrayList of node labels in order from the source to the destination,
+    //empty ArrayList if the source node or destination node are not in the graph.
+    //Note: Only valid on graphs that have numeric edge_labels
+    public ArrayList<N> shortestPath(N source, N destination)
+    {
+        ArrayList<N> path = new ArrayList<N>();
+        ArrayList<Double> dist = new ArrayList<Double>(node_count);
+        PriorityQueue<Pair> pQ = new PriorityQueue<Pair>();
+
+        //if there are no edges
+        if (edge_count == 0)
+        {
+            return path;
+        }
+
+        //if edgelabels aren't numeric
+        else if (edgeLabelsNotNumbers())
+        {
+            return path;
+        }
+
+        //if either source or destination aren't in the graph
+        else if (!node_list.containsKey(source) || !node_list.containsKey(destination))
+        {
+            return path;
+        }
+
+        //find the id of the source node && set distances
+        int sourceID = node_list.get(source).id;
+        for (int g=0; g<dist.size(); g++)
+        {
+            if (g==sourceID)
+            {
+                dist.set(g, new Double(0));
+                pQ.add(new Pair(new Double(0), sourceID));
+                continue;
+            }
+            dist.set(g, Double.MAX_VALUE);
+            pQ.add(new Pair(Double.MAX_VALUE, g));
+        }
+
+
+
+        while (pQ.size()>0)
+        {
+            Pair current = pQ.poll();
+            int curr_node_id = current.id;
+            Double curr_dist = current.distance;
+
+            ArrayList<Edge<N,E>> edges = adjacency_list.get(curr_node_id);
+            for (int g=0; g<edges.size(); g++)
+            {
+                int toID = node_list.get(edges.get(g).to).id;
+                Double edge_len = (Double) (edges.get(g).label); //this casting is valid because if edge labels are non Numbers this code is never run
+                if (edge_len+curr_dist < dist.get(g))
+                {
+                    pQ.remove(new Pair(new Double(dist.get(toID)), toID)); //test to make sure this line works
+                    dist.set(g,edge_len+curr_dist);
+                    pQ.add(new Pair(new Double(edge_len+curr_dist), toID));
+                }
+
+            }
+        }
+        
+        return path;
+    }
 }
