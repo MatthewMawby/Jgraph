@@ -224,7 +224,7 @@ public class JGraph<N,E> implements Graph<N,E> {
     {
         ArrayList<N> path = new ArrayList<N>();
         ArrayList<Double> dist = new ArrayList<Double>(node_count);
-        PriorityQueue<Double> pQ = new PriorityQueue<Double>();
+        PriorityQueue<Pair> pQ = new PriorityQueue<Pair>();
 
         //if there are no edges
         if (edge_count == 0)
@@ -248,19 +248,39 @@ public class JGraph<N,E> implements Graph<N,E> {
         int sourceID = node_list.get(source).id;
         for (int g=0; g<dist.size(); g++)
         {
-            dist.set(g, Double.MAX_VALUE);
             if (g==sourceID)
             {
                 dist.set(g, new Double(0));
+                pQ.add(new Pair(new Double(0), sourceID));
+                continue;
             }
+            dist.set(g, Double.MAX_VALUE);
+            pQ.add(new Pair(Double.MAX_VALUE, g));
         }
 
+
+
+        while (pQ.size()>0)
+        {
+            Pair current = pQ.poll();
+            int curr_node_id = current.id;
+            Double curr_dist = current.distance;
+
+            ArrayList<Edge<N,E>> edges = adjacency_list.get(curr_node_id);
+            for (int g=0; g<edges.size(); g++)
+            {
+                int toID = node_list.get(edges.get(g).to).id;
+                Double edge_len = (Double) (edges.get(g).label); //this casting is valid because if edge labels are non Numbers this code is never run
+                if (edge_len+curr_dist < dist.get(g))
+                {
+                    pQ.remove(new Pair(new Double(dist.get(toID)), toID)); //test to make sure this line works
+                    dist.set(g,edge_len+curr_dist);
+                    pQ.add(new Pair(new Double(edge_len+curr_dist), toID));
+                }
+
+            }
+        }
         
-
-
-
-
-
         return path;
     }
 }
