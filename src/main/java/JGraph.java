@@ -5,7 +5,6 @@
 
 package jgraph;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.PriorityQueue;
@@ -28,6 +27,7 @@ public class JGraph<N,E> implements Graph<N,E> {
     private int node_count;
     private int edge_count;
 
+    /*
     //@throws: RuntimeException if the representation invariant is broken
     //@returns: none
     //A private helper function to ensure the representation invariant is held
@@ -65,6 +65,7 @@ public class JGraph<N,E> implements Graph<N,E> {
             throw new RuntimeException("CheckRep() failed, node_count is not equal to the size of node_list");
         }
     }
+    */
 
     //@returns: this (a new JGraph)
     public JGraph()
@@ -73,18 +74,18 @@ public class JGraph<N,E> implements Graph<N,E> {
         this.adjacency_list= new ArrayList< ArrayList<Edge<N,E>> >();
         this.node_count=0;
         this.edge_count=0;
-        checkRep();
+        //checkRep();
     }
 
     //@param: N name | the node label
     //@returns: true if the node was added, otherwise false
     public boolean addNode(N name)
     {
-         checkRep();
+         //checkRep();
          Node<N> n = new Node<N>(name);
          if (node_list.containsKey(name))
          {
-             checkRep();
+             //checkRep();
              return false;
          }
          //add the node to node_list and add a new node to the adjacency_list
@@ -95,7 +96,7 @@ public class JGraph<N,E> implements Graph<N,E> {
              ArrayList<Edge<N,E>> edges = new ArrayList<Edge<N,E>>();
              this.adjacency_list.add(edges);
              node_list.put(name, n);
-             checkRep();
+             //checkRep();
              return true;
          }
     }
@@ -106,14 +107,14 @@ public class JGraph<N,E> implements Graph<N,E> {
     //@returns: true if the edge was added, otherwise false
     public boolean addEdge(N from, N to, E label)
     {
-        checkRep();
+        //checkRep();
         Node<N> n1= new Node<N>(from);
 
         //if either one of the nodes the edge is between are not in the graph
         //then the edge can't be added
         if(!node_list.containsKey(from) || !node_list.containsKey(to))
         {
-            checkRep();
+            //checkRep();
             return false;
         }
 
@@ -126,7 +127,7 @@ public class JGraph<N,E> implements Graph<N,E> {
             int nodeID=n1.getID();
             this.adjacency_list.get(nodeID).add(e);
             this.edge_count+=1;
-            checkRep();
+            //checkRep();
             return true;
         }
     }
@@ -181,9 +182,9 @@ public class JGraph<N,E> implements Graph<N,E> {
         return edges;
     }
 
-    //@returns: A HashSet containing the labels of nodes connected to the given node. Returns an empty set if the
+    //@returns: A HashSet containing the labels of nodes you can get to from the given node. Returns an empty set if the
     //given node has no neighbors or is not in the graph.
-    public HashSet<N> getNeighbors(N node_label)
+    public HashSet<N> getNeighborsTo(N node_label)
     {
         HashSet<N> nodes = new HashSet<N>();
 
@@ -199,6 +200,31 @@ public class JGraph<N,E> implements Graph<N,E> {
         }
         return nodes;
     }
+
+    //@returns: A HashSet containing the labels of nodes you can get to the given node from. Returns an empty set if the
+    //given node has no neighbors or is not in the graph.
+    public HashSet<N> getNeighborsFrom(N node_label)
+    {
+        HashSet<N> nodes = new HashSet<N>();
+        if (node_list.containsKey(node_label))
+        {
+            for (int g=0; g<adjacency_list.size(); g++)
+            {
+                ArrayList<Edge<N,E>> e = new ArrayList<Edge<N,E>>();
+                e = adjacency_list.get(g);
+                for (int c=0; c<e.size(); c++)
+                {
+                    if (e.get(c).to.equals(node_label))
+                    {
+                        nodes.add(e.get(c).from);
+                    }
+                }
+            }
+        }
+        return nodes;
+    }
+
+    /* PATHFINDING NEEDS TO BE REWORKED
 
     //@returns: True if E is a Numeric type, false otherwise
     private boolean edgeLabelsNotNumbers()
@@ -258,8 +284,6 @@ public class JGraph<N,E> implements Graph<N,E> {
             pQ.add(new Pair(Double.MAX_VALUE, g));
         }
 
-
-
         while (pQ.size()>0)
         {
             Pair current = pQ.poll();
@@ -277,10 +301,10 @@ public class JGraph<N,E> implements Graph<N,E> {
                     dist.set(g,edge_len+curr_dist);
                     pQ.add(new Pair(new Double(edge_len+curr_dist), toID));
                 }
-
             }
         }
-        
         return path;
     }
+
+    */
 }

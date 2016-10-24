@@ -4,9 +4,9 @@
 */
 
 package jgraph;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 public interface Graph<N,E> {
 
@@ -36,14 +36,18 @@ public interface Graph<N,E> {
         //@returns: A HashMap of the edge labels of all edges in the graph and the number of times that entry appears
         public HashMap<E,Integer> getEdges();
 
-        //@returns: A HashSet containing the labels of nodes connected to the given node. Returns an empty set if the
+        //@returns: A HashSet containing the labels of nodes you can get to from the given node. Returns an empty set if the
         //given node has no neighbors or is not in the graph.
-        public HashSet<N> getNeighbors(N node_label);
+        public HashSet<N> getNeighborsTo(N node_label);
+
+        //@returns: A HashSet containing the labels of nodes you can get to the given node from. Returns an empty set if the
+        //given node has no neighbors or is not in the graph.
+        public HashSet<N> getNeighborsFrom(N node_label);
 
         //@param:     source | the node label of the starting node
         //@param: destination| the node label of the destination node
         //@returns: an ArrayList of node labels in order from the source to the destination,
         //empty ArrayList if the source node or destination node are not in the graph.
         //Note: Only valid on graphs that have numeric edge_labels
-        public ArrayList<N> shortestPath(N source, N destination);
+       // public ArrayList<N> shortestPath(N source, N destination);
 }
