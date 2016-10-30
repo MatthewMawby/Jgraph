@@ -224,21 +224,24 @@ public class JGraph<N,E> implements Graph<N,E> {
         return nodes;
     }
 
-    /* PATHFINDING NEEDS TO BE REWORKED
+    // PATHFINDING NEEDS TO BE REWORKED
 
-    //@returns: True if E is a Numeric type, false otherwise
-    private boolean edgeLabelsNotNumbers()
+    public Double etodouble(E edgelabel)
     {
-        E edge_label = null;
-        for (int g=0; g<adjacency_list.size(); g++)
+        if (!(edgelabel instanceof Number))
         {
-            if (adjacency_list.get(g).size() > 0)
-            {
-                edge_label = adjacency_list.get(g).get(0).label;
-            }
+            return new Double(1);
         }
 
-        return !(edge_label instanceof Number);
+        else if (edgelabel instanceof Double)
+        {
+            return (Double) edgelabel;
+        }
+
+        else
+        {
+            return ((Double) edgelabel).doubleValue();
+        }
     }
 
     //@param:     source | the node label of the starting node
@@ -254,12 +257,6 @@ public class JGraph<N,E> implements Graph<N,E> {
 
         //if there are no edges
         if (edge_count == 0)
-        {
-            return path;
-        }
-
-        //if edgelabels aren't numeric
-        else if (edgeLabelsNotNumbers())
         {
             return path;
         }
@@ -306,5 +303,4 @@ public class JGraph<N,E> implements Graph<N,E> {
         return path;
     }
 
-    */
 }
