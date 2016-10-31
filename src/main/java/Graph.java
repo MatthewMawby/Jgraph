@@ -3,7 +3,7 @@
 * @version 1.0
 */
 
-package jgraph;
+package Jgraph;
 import java.util.HashSet;
 import java.util.HashMap;
 import java.util.ArrayList;

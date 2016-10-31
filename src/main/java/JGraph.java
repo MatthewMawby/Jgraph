@@ -3,11 +3,12 @@
 * @version 1.0
 */
 
-package jgraph;
+package Jgraph;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.PriorityQueue;
+import java.util.Set;
 
 //JGraph is a mutable Graph Abstract Data Type
 //
@@ -226,7 +227,7 @@ public class JGraph<N,E> implements Graph<N,E> {
 
     // PATHFINDING NEEDS TO BE REWORKED
 
-    public Double etodouble(E edgelabel)
+    public double etodouble(E edgelabel)
     {
         if (!(edgelabel instanceof Number))
         {
@@ -238,69 +239,81 @@ public class JGraph<N,E> implements Graph<N,E> {
             return (Double) edgelabel;
         }
 
-        else
+        else if (edgelabel instanceof Number)
         {
-            return ((Double) edgelabel).doubleValue();
+            return  ((Number) edgelabel).doubleValue();
         }
+
+        return 1;
     }
 
     //@param:     source | the node label of the starting node
     //@param: destination| the node label of the destination node
-    //@returns: an ArrayList of node labels in order from the source to the destination,
-    //empty ArrayList if the source node or destination node are not in the graph.
-    //Note: Only valid on graphs that have numeric edge_labels
-    public ArrayList<N> shortestPath(N source, N destination)
+    //@returns: a HashMap<N, Double> where the key is the name of the node
+    //and the value is the distance to that node as per Dijkstra's algorithm
+    //(Edge labels are all weighted 1 if they are non-numeric)
+    public HashMap<N,Double> shortestPathTree(N source, N destination)
     {
-        ArrayList<N> path = new ArrayList<N>();
-        ArrayList<Double> dist = new ArrayList<Double>(node_count);
+        //arraylist used as a sort of map <nodeID(index), distance>
+        ArrayList<Double> nodeVals = new ArrayList<Double>();
+        //HashMap used to store shortest path tree
+        HashMap<N,Double> dist = new HashMap<N,Double>();
         PriorityQueue<Pair> pQ = new PriorityQueue<Pair>();
 
         //if there are no edges
         if (edge_count == 0)
         {
-            return path;
+            return dist;
         }
 
         //if either source or destination aren't in the graph
         else if (!node_list.containsKey(source) || !node_list.containsKey(destination))
         {
-            return path;
+            return dist;
         }
 
-        //find the id of the source node && set distances
+        //set all node distances to max value, except the distance of the source
+        Set<N> n = node_list.keySet();
         int sourceID = node_list.get(source).id;
-        for (int g=0; g<dist.size(); g++)
+        for (N nlabel : n)
         {
-            if (g==sourceID)
+            nodeVals.add(Double.MAX_VALUE);
+            if (nlabel.equals(source))
             {
-                dist.set(g, new Double(0));
+                dist.put(nlabel, new Double(0));
                 pQ.add(new Pair(new Double(0), sourceID));
                 continue;
             }
-            dist.set(g, Double.MAX_VALUE);
-            pQ.add(new Pair(Double.MAX_VALUE, g));
+            dist.put(nlabel, Double.MAX_VALUE);
         }
+        nodeVals.set(sourceID, new Double(0));
 
         while (pQ.size()>0)
         {
+            //retrieve the node from the top of the priority queue & get its edge list
             Pair current = pQ.poll();
             int curr_node_id = current.id;
             Double curr_dist = current.distance;
-
             ArrayList<Edge<N,E>> edges = adjacency_list.get(curr_node_id);
+
+            //for all the edges extending from the current node
             for (int g=0; g<edges.size(); g++)
             {
                 int toID = node_list.get(edges.get(g).to).id;
-                Double edge_len = (Double) (edges.get(g).label); //this casting is valid because if edge labels are non Numbers this code is never run
-                if (edge_len+curr_dist < dist.get(g))
+                N tolabel = edges.get(g).to;
+                Double edge_len = etodouble(edges.get(g).label);
+                //if the calculated distance to the neighbor is less than the stored distance to the neighbor
+                if (edge_len+curr_dist < nodeVals.get(toID))
                 {
-                    pQ.remove(new Pair(new Double(dist.get(toID)), toID)); //test to make sure this line works
-                    dist.set(g,edge_len+curr_dist);
+                    //update the distance value of the neighbor node (in the pq, in the nodeVals list, and in the dist hashmap)
+                    pQ.remove(new Pair(new Double(nodeVals.get(toID)), toID));
+                    nodeVals.set(toID,edge_len+curr_dist);
+                    dist.remove(tolabel);
+                    dist.put(tolabel, edge_len+curr_dist);
                     pQ.add(new Pair(new Double(edge_len+curr_dist), toID));
                 }
             }
         }
-        return path;
+        return dist;
     }
-
 }

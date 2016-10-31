@@ -1,15 +1,17 @@
-package jgraph;
+package Jgraph;
 import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+
 import org.junit.Test;
+
 
 public class JGraphTest
 {
     JGraph<String, Integer> testGraph1 = new JGraph<String, Integer>();
-    JGraph<String, Integer> testGraph2 = new JGraph<String, Integer>();
-    JGraph<String, String> testGraph3 = new JGraph<String, String>();
+    JGraph<String, String> testGraph2 = new JGraph<String, String>();
 
     /**
      * Helper functions for testing
@@ -22,12 +24,30 @@ public class JGraphTest
         testGraph1.addNode("D");
     }
 
+    public void build_graph2()
+    {
+        testGraph2.addNode("A");
+        testGraph2.addNode("B");
+        testGraph2.addNode("C");
+        testGraph2.addNode("D");
+    }
+
     public void add_edges()
     {
         testGraph1.addEdge("A","B",7);
+        testGraph1.addEdge("A","B",7);
         testGraph1.addEdge("B","C",12);
-        testGraph1.addEdge("C","D",4);
+        testGraph1.addEdge("D","C",4);
         testGraph1.addEdge("B","D",7);
+    }
+
+    public void add_string_edges()
+    {
+        testGraph2.addEdge("A","B","HI");
+        testGraph2.addEdge("A","B","THERE");
+        testGraph2.addEdge("B","C","HOW");
+        testGraph2.addEdge("D","C","ARE");
+        testGraph2.addEdge("B","D","YOU");
     }
 
     /**
@@ -240,7 +260,22 @@ public class JGraphTest
     {
         build_graph();
         add_edges();
-        //this test is broken - can't run weighted path on graphs where edgelabels are not numbers
-        //may have to only implement unweighted path
+        HashMap<String,Double> spt = testGraph1.shortestPathTree("A","C");
+        assertTrue(spt.get("A").equals(new Double(0)));
+        assertTrue(spt.get("B").equals(new Double(7)));
+        assertTrue(spt.get("C").equals(new Double(18)));
+        assertTrue(spt.get("D").equals(new Double(14)));
+    }
+
+    @Test
+    public void test_shortest_path_tree_non_numeric_edges()
+    {
+        build_graph2();
+        add_string_edges();
+        HashMap<String,Double> spt = testGraph2.shortestPathTree("A", "C");
+        assertTrue(spt.get("A").equals(new Double(0)));
+        assertTrue(spt.get("B").equals(new Double(1)));
+        assertTrue(spt.get("C").equals(new Double(2)));
+        assertTrue(spt.get("D").equals(new Double(2)));
     }
 }

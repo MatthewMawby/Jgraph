@@ -3,7 +3,7 @@
 * @version 1.0
 */
 
-package jgraph;
+package Jgraph;
 
 class Edge<N,E> {
 

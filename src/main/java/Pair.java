@@ -2,7 +2,7 @@
 * @author Matthew Mawby
 * @version 1.0
 */
-package jgraph;
+package Jgraph;
 
 class Pair implements Comparable<Pair>
 {
