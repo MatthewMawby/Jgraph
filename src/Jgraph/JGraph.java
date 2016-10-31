@@ -159,24 +159,28 @@ public class JGraph<N,E> implements Graph<N,E> {
         return nodes;
     }
 
-    //@returns: A HashMap of the edge labels of all edges in the graph and the number of times that entry appears
-    public HashMap<E,Integer> getEdges()
+    //@returns: A HashMap where keys are in the format "from:edge_label:to" and values are the number of times that edge occurs
+    public HashMap<String,Integer> getEdges()
     {
-        HashMap<E,Integer> edges = new HashMap<E,Integer>();
+        HashMap<String,Integer> edges = new HashMap<String,Integer>();
         for (int c=0; c<adjacency_list.size(); c++)
         {
             ArrayList<Edge<N,E> > current = adjacency_list.get(c);
             for (int g=0; g<current.size(); g++)
             {
+                //create the key for the current edge
+                Edge<N,E> edge = current.get(g);
+                String eString = edge.from.toString()+":"+edge.label.toString()+":"+edge.to.toString();
+
                 //if the current edge is in the HashMap increment the value by 1
-                if (edges.containsKey(current.get(g).label))
+                if (edges.containsKey(eString))
                 {
-                    edges.put(current.get(g).label, edges.get(current.get(g).label)+1);
+                    edges.put(eString, edges.get(eString)+1);
                 }
                 //else add the edge to the HashMap and give it the value of 1
                 else
                 {
-                    edges.put(current.get(g).label, 1);
+                    edges.put(eString, 1);
                 }
             }
         }

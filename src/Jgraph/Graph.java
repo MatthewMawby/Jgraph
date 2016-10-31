@@ -6,7 +6,6 @@
 package Jgraph;
 import java.util.HashSet;
 import java.util.HashMap;
-import java.util.ArrayList;
 
 public interface Graph<N,E> {
 
@@ -33,8 +32,9 @@ public interface Graph<N,E> {
         //@returns: A HashSet of the node labels of all nodes in the graph
         public HashSet<N> getNodes();
 
-        //@returns: A HashMap of the edge labels of all edges in the graph and the number of times that entry appears
-        public HashMap<E,Integer> getEdges();
+        //@returns: A HashMap where keys are a string in the format "NODE-from:edge_label:NODE-to" by
+        //utilizing the object.toString() method and values are the number of times that edge occurs
+        public HashMap<String,Integer> getEdges();
 
         //@returns: A HashSet containing the labels of nodes you can get to from the given node. Returns an empty set if the
         //given node has no neighbors or is not in the graph.
@@ -48,6 +48,6 @@ public interface Graph<N,E> {
         //@param: destination| the node label of the destination node
         //@returns: an ArrayList of node labels in order from the source to the destination,
         //empty ArrayList if the source node or destination node are not in the graph.
-        //Shortest path is found using Dijkstra's. Edges are treated as even weights if they are not Numbers.
-        public ArrayList<N> shortestPath(N source, N destination);
+        //Note: Only valid on graphs that have numeric edge_labels
+       // public ArrayList<N> shortestPath(N source, N destination);
 }

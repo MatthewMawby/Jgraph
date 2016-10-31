@@ -175,14 +175,12 @@ public class JGraphTest
     {
         build_graph();
         add_edges();
-        HashMap<Integer, Integer> e = testGraph1.getEdges();
-        //assertTrue(e.size() == testGraph1.edgeCount());
-        for (Integer i : e.values())
-        {
-            //System.out.println(i);
-            //assertTrue(i == 1);
-        }
-        //assertTrue(testGraph1.addEdges())
+        HashMap<String, Integer> e = testGraph1.getEdges();
+        assertTrue(e.size() == 4);
+        assertTrue(e.get("A:7:B") == 2);
+        assertTrue(e.get("B:7:D") == 1);
+        assertTrue(e.get("B:12:C") == 1);
+        assertTrue(e.get("D:4:C") == 1);
     }
 
     @Test
@@ -190,7 +188,7 @@ public class JGraphTest
     {
         build_graph();
         add_edges();
-        HashMap<Integer, Integer> e = testGraph1.getEdges();
+        HashMap<String, Integer> e = testGraph1.getEdges();
         int edge_count =0;
         for (Integer i : e.values())
         {
