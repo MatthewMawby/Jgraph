@@ -6,7 +6,9 @@ JGraph is a mutable Abstract Data Type (ADT). JGraph was created to practice cre
 
 JGraph is a graph implementation that allows users to solve graph problems by adding nodes and edges to the class then solving the problems using JGraph's built in methods. JGraph supports custom data types as it is built with generics. It supports path finding with Dijkstra's algorithm. Full [documentation](https://github.com/MatthewMawby/Jgraph/wiki/Documentation) for JGraph is specified in the [wiki](https://github.com/MatthewMawby/Jgraph/wiki/home) in a javadoc-like format.
 
+JGraph has been well tested and 100% coverage has been achieved for JGraph and its related classes.
+![alt text](images/JGraphCodeCoverage.png "Code Coverage via EclEmma")
+
 If you have any questions, comments, contributions, or concerns feel free to make an issue, submit a pull request, or send me a message!
 
 Thanks!
-
