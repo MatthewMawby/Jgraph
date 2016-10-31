@@ -324,6 +324,22 @@ public class JGraphTest
     }
 
     @Test
+    public void test_spt_consists_of_min_edges()
+    {
+        build_graph();
+        add_edges();
+        testGraph1.addEdge("A","B",1);
+        testGraph1.addEdge("B","C",1);
+        testGraph1.addEdge("B","D",1);
+        testGraph1.addEdge("D","C",1);
+        HashMap<String,Double> spt1 = testGraph1.shortestPathTree("A");
+        assertTrue(spt1.get("A").equals(new Double(0)));
+        assertTrue(spt1.get("B").equals(new Double(1)));
+        assertTrue(spt1.get("C").equals(new Double(2)));
+        assertTrue(spt1.get("D").equals(new Double(2)));
+    }
+
+    @Test
     public void test_shortest_path()
     {
         build_graph();
@@ -381,5 +397,27 @@ public class JGraphTest
         build_graph();
         ArrayList<String> spt2 = testGraph1.shortestPath("A","C");
         assertTrue(spt2.size()==0);
+    }
+
+    @Test
+    public void test_sp_isolated_node()
+    {
+        build_graph();
+        add_edges();
+        testGraph1.addNode("G");
+        ArrayList<String> spt2 = testGraph1.shortestPath("A", "G");
+        assertTrue(spt2.size()==0);
+    }
+
+    @Test
+    public void test_shortest_edge_always_chosen()
+    {
+        build_graph();
+        add_edges();
+        testGraph1.addEdge("B","C",0);
+        ArrayList<String> spt2 = testGraph1.shortestPath("A", "C");
+        assertTrue(spt2.get(0).equals("A"));
+        assertTrue(spt2.get(1).equals("B"));
+        assertTrue(spt2.get(2).equals("C"));
     }
 }

@@ -343,9 +343,11 @@ public class JGraph<N,E> implements Graph<N,E> {
             return new ArrayList<N>();
         }
 
-        //set all node distances to max value, except the distance of the source
-        Set<N> n = node_list.keySet();
+        //store the ID vals of the source and destination nodes
+        int destID = node_list.get(destination).id;
         int sourceID = node_list.get(source).id;
+
+        //set all node distances to max value, except the distance of the source
         for (int c = 0; c<node_list.size(); c++)
         {
             nodeVals.add(Double.MAX_VALUE);
@@ -369,6 +371,7 @@ public class JGraph<N,E> implements Graph<N,E> {
                 int toID = node_list.get(edges.get(g).to).id;
                 int fromID = node_list.get(edges.get(g).from).id;
                 Double edge_len = etodouble(edges.get(g).label);
+
                 //if the calculated distance to the neighbor is less than the stored distance to the neighbor
                 if (edge_len+curr_dist < nodeVals.get(toID))
                 {
@@ -385,7 +388,6 @@ public class JGraph<N,E> implements Graph<N,E> {
             }
         }
         //return the path corresponding to the destination node
-        int destID = node_list.get(destination).id;
         return nodePaths.get(destID);
     }
 }
