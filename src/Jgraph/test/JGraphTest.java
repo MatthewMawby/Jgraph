@@ -1,10 +1,9 @@
 package Jgraph;
-import static org.junit.Assert.*;
 
+import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-
 import org.junit.Test;
 
 
@@ -263,6 +262,18 @@ public class JGraphTest
         assertTrue(spt.get("B").equals(new Double(7)));
         assertTrue(spt.get("C").equals(new Double(18)));
         assertTrue(spt.get("D").equals(new Double(14)));
+    }
+
+    @Test
+    public void test_spt_double_edges()
+    {
+        JGraph<String, Double> testGraph = new JGraph<String, Double>();
+        testGraph.addNode("A");
+        testGraph.addNode("B");
+        testGraph.addEdge("A", "B", new Double(1.337));
+        HashMap<String, Double> spt = testGraph.shortestPathTree("A");
+        assertTrue(spt.get("A").equals(new Double(0)));
+        assertTrue(spt.get("B").equals(new Double(1.337)));
     }
 
     @Test

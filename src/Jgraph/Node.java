@@ -31,27 +31,4 @@ class Node<N> {
     {
         this.id=idnum;
     }
-
-    //@returns: the hashCode of this.name
-    //This function is an override to make nodes easily hashable so long as the type of the label is hashable
-    @Override
-    public int hashCode()
-    {
-        return name.hashCode();
-    }
-
-    //@param: Object o | the object this is being compared to
-    //@returns: true if this == Object o, false otherwise
-    @Override
-    public boolean equals(Object o)
-    {
-        if (o instanceof Node<?>)
-        {
-            if (((Node<?>)o ).name.equals(this.name))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
 }
