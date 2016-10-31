@@ -278,4 +278,29 @@ public class JGraphTest
         assertTrue(spt.get("C").equals(new Double(2)));
         assertTrue(spt.get("D").equals(new Double(2)));
     }
+
+    @Test
+    public void test_shortest_path()
+    {
+        build_graph();
+        add_edges();
+        ArrayList<String> sp = testGraph1.shortestPath("A","C");
+        assertTrue(sp.size()==4);
+        assertTrue(sp.get(0).equals("A"));
+        assertTrue(sp.get(1).equals("B"));
+        assertTrue(sp.get(2).equals("D"));
+        assertTrue(sp.get(3).equals("C"));
+    }
+
+    @Test
+    public void test_shortest_path_non_numeric_edges()
+    {
+        build_graph2();
+        add_string_edges();
+        ArrayList<String> sp = testGraph2.shortestPath("A","C");
+        assertTrue(sp.size()==3);
+        assertTrue(sp.get(0).equals("A"));
+        assertTrue(sp.get(1).equals("B"));
+        assertTrue(sp.get(2).equals("C"));
+    }
 }

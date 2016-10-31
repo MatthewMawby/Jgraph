@@ -316,4 +316,76 @@ public class JGraph<N,E> implements Graph<N,E> {
         }
         return dist;
     }
+
+
+    //@param:     source | the node label of the starting node
+    //@param: destination| the node label of the destination node
+    //@returns: ArrayList<N> containing the node labels from the source node
+    //to the destination node. Path found using Dijkstras algorithm. Non-numeric
+    //edges are treated as edges with even weight.
+    public ArrayList<N> shortestPath(N source, N destination)
+    {
+        //arraylist used as a sort of map <nodeID(index), distance>
+        ArrayList<Double> nodeVals = new ArrayList<Double>();
+        //arraylist used to store the current path to each node
+        ArrayList<ArrayList<N>> nodePaths = new ArrayList<ArrayList<N>>();
+        PriorityQueue<Pair> pQ = new PriorityQueue<Pair>();
+
+        //if there are no edges
+        if (edge_count == 0)
+        {
+            return new ArrayList<N>();
+        }
+
+        //if either source or destination aren't in the graph
+        else if (!node_list.containsKey(source) || !node_list.containsKey(destination))
+        {
+            return new ArrayList<N>();
+        }
+
+        //set all node distances to max value, except the distance of the source
+        Set<N> n = node_list.keySet();
+        int sourceID = node_list.get(source).id;
+        for (int c = 0; c<node_list.size(); c++)
+        {
+            nodeVals.add(Double.MAX_VALUE);
+            nodePaths.add(new ArrayList<N>());
+        }
+        nodeVals.set(sourceID, new Double(0));
+        pQ.add(new Pair(new Double(0), sourceID));
+        nodePaths.get(sourceID).add(source);
+
+        while (pQ.size()>0)
+        {
+            //retrieve the node from the top of the priority queue & get its edge list
+            Pair current = pQ.poll();
+            int curr_node_id = current.id;
+            Double curr_dist = current.distance;
+            ArrayList<Edge<N,E>> edges = adjacency_list.get(curr_node_id);
+
+            //for all the edges extending from the current node
+            for (int g=0; g<edges.size(); g++)
+            {
+                int toID = node_list.get(edges.get(g).to).id;
+                int fromID = node_list.get(edges.get(g).from).id;
+                Double edge_len = etodouble(edges.get(g).label);
+                //if the calculated distance to the neighbor is less than the stored distance to the neighbor
+                if (edge_len+curr_dist < nodeVals.get(toID))
+                {
+                    //update the distance value of the neighbor node (in the pq, in the nodeVals list)
+                    //update the path for the neighbor node (path to from node + the current node)
+                    pQ.remove(new Pair(new Double(nodeVals.get(toID)), toID));
+                    nodeVals.set(toID,edge_len+curr_dist);
+                    ArrayList<N> newpath = new ArrayList<N>();
+                    newpath.addAll(nodePaths.get(fromID));
+                    newpath.add(edges.get(g).to);
+                    nodePaths.set(toID, newpath);
+                    pQ.add(new Pair(new Double(edge_len+curr_dist), toID));
+                }
+            }
+        }
+        //return the path corresponding to the destination node
+        int destID = node_list.get(destination).id;
+        return nodePaths.get(destID);
+    }
 }
