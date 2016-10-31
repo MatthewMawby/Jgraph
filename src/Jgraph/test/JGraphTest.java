@@ -260,7 +260,7 @@ public class JGraphTest
     {
         build_graph();
         add_edges();
-        HashMap<String,Double> spt = testGraph1.shortestPathTree("A","C");
+        HashMap<String,Double> spt = testGraph1.shortestPathTree("A");
         assertTrue(spt.get("A").equals(new Double(0)));
         assertTrue(spt.get("B").equals(new Double(7)));
         assertTrue(spt.get("C").equals(new Double(18)));
@@ -268,15 +268,59 @@ public class JGraphTest
     }
 
     @Test
+    public void test_spt_isolated_node()
+    {
+        build_graph();
+        add_edges();
+        testGraph1.addNode("G");
+        HashMap<String,Double> spt = testGraph1.shortestPathTree("A");
+        assertTrue(spt.get("A").equals(new Double(0)));
+        assertTrue(spt.get("B").equals(new Double(7)));
+        assertTrue(spt.get("C").equals(new Double(18)));
+        assertTrue(spt.get("D").equals(new Double(14)));
+        assertTrue(spt.get("G").equals(Double.MAX_VALUE));
+    }
+
+    @Test
     public void test_shortest_path_tree_non_numeric_edges()
     {
         build_graph2();
         add_string_edges();
-        HashMap<String,Double> spt = testGraph2.shortestPathTree("A", "C");
+        HashMap<String,Double> spt = testGraph2.shortestPathTree("A");
         assertTrue(spt.get("A").equals(new Double(0)));
         assertTrue(spt.get("B").equals(new Double(1)));
         assertTrue(spt.get("C").equals(new Double(2)));
         assertTrue(spt.get("D").equals(new Double(2)));
+    }
+    @Test
+    public void test_spt_isolated_node_non_numeric_edges()
+    {
+        build_graph2();
+        add_string_edges();
+        testGraph2.addNode("G");
+        HashMap<String,Double> spt = testGraph2.shortestPathTree("A");
+        assertTrue(spt.get("A").equals(new Double(0)));
+        assertTrue(spt.get("B").equals(new Double(1)));
+        assertTrue(spt.get("C").equals(new Double(2)));
+        assertTrue(spt.get("D").equals(new Double(2)));
+        assertTrue(spt.get("G").equals(Double.MAX_VALUE));
+    }
+
+    @Test
+    public void test_spt_node_not_in_graph()
+    {
+        build_graph();
+        add_edges();
+        HashMap<String, Double> spt1 = testGraph1.shortestPathTree("F");
+        assertTrue(spt1.size()==0);
+    }
+
+    @Test
+    public void test_spt_no_edges()
+    {
+        build_graph();
+        HashMap<String, Double> spt1 = testGraph1.shortestPathTree("A");
+        assertTrue(spt1.size()==0);
     }
 
     @Test
@@ -302,5 +346,40 @@ public class JGraphTest
         assertTrue(sp.get(0).equals("A"));
         assertTrue(sp.get(1).equals("B"));
         assertTrue(sp.get(2).equals("C"));
+    }
+
+    @Test
+    public void test_sp_first_node_not_in_graph()
+    {
+        build_graph();
+        add_edges();
+        ArrayList<String> spt2 = testGraph1.shortestPath("F","A");
+        assertTrue(spt2.size()==0);
+    }
+
+    @Test
+    public void test_sp_second_node_not_in_graph()
+    {
+        build_graph();
+        add_edges();
+        ArrayList<String> spt2 = testGraph1.shortestPath("A","F");
+        assertTrue(spt2.size()==0);
+    }
+
+    @Test
+    public void test_sp_both_nodes_not_in_graph()
+    {
+        build_graph();
+        add_edges();
+        ArrayList<String> spt2 = testGraph1.shortestPath("F","G");
+        assertTrue(spt2.size()==0);
+    }
+
+    @Test
+    public void test_sp_no_edges()
+    {
+        build_graph();
+        ArrayList<String> spt2 = testGraph1.shortestPath("A","C");
+        assertTrue(spt2.size()==0);
     }
 }

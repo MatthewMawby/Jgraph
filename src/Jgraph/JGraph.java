@@ -252,7 +252,7 @@ public class JGraph<N,E> implements Graph<N,E> {
     //@returns: a HashMap<N, Double> where the key is the name of the node
     //and the value is the distance to that node as per Dijkstra's algorithm
     //(Edge labels are all weighted 1 if they are non-numeric)
-    public HashMap<N,Double> shortestPathTree(N source, N destination)
+    public HashMap<N,Double> shortestPathTree(N source)
     {
         //arraylist used as a sort of map <nodeID(index), distance>
         ArrayList<Double> nodeVals = new ArrayList<Double>();
@@ -267,7 +267,7 @@ public class JGraph<N,E> implements Graph<N,E> {
         }
 
         //if either source or destination aren't in the graph
-        else if (!node_list.containsKey(source) || !node_list.containsKey(destination))
+        else if (!node_list.containsKey(source))
         {
             return dist;
         }
