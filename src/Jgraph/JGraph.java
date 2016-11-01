@@ -229,8 +229,11 @@ public class JGraph<N,E> implements Graph<N,E> {
         return nodes;
     }
 
-    // PATHFINDING NEEDS TO BE REWORKED
-
+    
+    //@param: E | edgelabel is the label of an edge in this
+    //@returns: double representing the weight of the edge represented by edgelabel.
+    //If the type E is does not implement abstract class Number then it returns 1, otherwise
+    //the numeric double value of edgelabel is returned.
     public double etodouble(E edgelabel)
     {
         if (!(edgelabel instanceof Number))
