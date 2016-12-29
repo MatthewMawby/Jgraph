@@ -44,10 +44,9 @@ public interface Graph<N,E> {
         //given node has no neighbors or is not in the graph.
         public HashSet<N> getNeighborsFrom(N node_label);
 
-        //@param:     source | the node label of the starting node
-        //@param: destination| the node label of the destination node
-        //@returns: an ArrayList of node labels in order from the source to the destination,
-        //empty ArrayList if the source node or destination node are not in the graph.
-        //Note: Only valid on graphs that have numeric edge_labels
-       // public ArrayList<N> shortestPath(N source, N destination);
+        // @param:     source | the node label of the starting node
+        // @param: destination| the node label of the destination node
+        // @returns: an ArrayList of node labels in order from the source to the destination,
+        // empty ArrayList if the source node or destination node are not in the graph.
+        public ArrayList<N> shortestPath(N source, N destination);
 }
